@@ -1,0 +1,42 @@
+package ConnDB;
+import java.sql.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class ConnectDB {
+	private Connection ct=null;
+	public Connection ConnectORADB(){
+		try {
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+		String url="jdbc:oracle:thin:@172.16.1.213:1521:MCS";
+		String user="web";
+		String pwd="allweb";
+		ct=DriverManager.getConnection(url,user,pwd);
+		/*	Context ctx = new InitialContext();
+			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/rmamcs");
+	        ct = ds.getConnection() ;*/
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return ct;
+	}
+	public Connection ConnectSQLDB(){
+		try {
+		Class.forName("com.microsoft.jdbc.sqlserver.SqlServerDriver").newInstance();
+		String url="jdbc:microsoft:sqlserver://ETL_PDTSVR:1433:databasename=barmatrl";
+		String user="sa";
+		String pwd="bar";
+		ct=DriverManager.getConnection(url,user,pwd);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return ct;
+	}
+
+}
